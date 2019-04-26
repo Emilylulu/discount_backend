@@ -3,6 +3,7 @@ package com.webapplication.discounthero.service;
 import com.webapplication.discounthero.domain.AmazonCloth;
 import com.webapplication.discounthero.dto.AmazonClothDto;
 import com.webapplication.discounthero.repository.AmazonClothRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +21,11 @@ public class AmazonClothService {
     public List<AmazonClothDto> getAllItems() {
         List<AmazonCloth> allItems = amazonClothRepository.findAll();
         return allItems.stream()
-                .map(amazonCloth -> AmazonClothDto.builder()
-                        .title(amazonCloth.getTitle())
-                        .imgUrl(amazonCloth.getImgUrl())
-                        .price(amazonCloth.getPrice())
-                        .build())
+                .map(amazonCloth -> {
+                    AmazonClothDto dto = new AmazonClothDto();
+                    BeanUtils.copyProperties(amazonCloth, dto);
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 }
