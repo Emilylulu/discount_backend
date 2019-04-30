@@ -12,4 +12,4 @@ get all data in cloth catagory
 http://localhost:5005/cloth/all
 
 get one item from cloth database by asin
-http://localhost:5005/cloth/user/0681256036
+http://localhost:5005/cloth/user/0681256036 (example)
