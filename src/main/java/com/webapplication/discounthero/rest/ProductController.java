@@ -1,17 +1,16 @@
 package com.webapplication.discounthero.rest;
 
 import com.webapplication.discounthero.dto.AmazonClothDto;
+import com.webapplication.discounthero.dto.ProductDetailDto;
 import com.webapplication.discounthero.service.AmazonClothService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/cloth")
+//@RequestMapping(path = "/user")
 public class ProductController {
 
     private AmazonClothService amazonClothService;
@@ -22,5 +21,9 @@ public class ProductController {
     @GetMapping(path = "/all")
     public List<AmazonClothDto> getAllItems() {
         return amazonClothService.getAllItems();
+    }
+    @GetMapping(path = "/user/{id}")
+    public ProductDetailDto getOneItem(@PathVariable("id") String id) {
+        return amazonClothService.getOneItem(id);
     }
 }
