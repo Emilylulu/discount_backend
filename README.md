@@ -7,6 +7,7 @@ to run the backend:
 1.add local database password in /discount_backend/src/main/resources/application.properties
 
 2./discount_backend/src/main/java/com/webapplication/discounthero/domain/AmazonCloth.java 
+
    change "@Table(name = "baseline_amazon_clothes")" to your local table name
 
 
