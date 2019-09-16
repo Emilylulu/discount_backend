@@ -11,11 +11,11 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/cloth")
 //@RequestMapping(path = "/user")
-public class ProductController {
+public class ClothController {
 
     private AmazonClothService amazonClothService;
 
-    public ProductController(AmazonClothService amazonClothService) {
+    public ClothController(AmazonClothService amazonClothService) {
         this.amazonClothService = amazonClothService;
     }
     @GetMapping(path = "/all")
