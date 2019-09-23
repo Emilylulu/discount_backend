@@ -4,6 +4,7 @@ import com.webapplication.discounthero.domain.AmazonBaseline;
 import com.webapplication.discounthero.domain.AmazonBaselineCategory;
 import com.webapplication.discounthero.dto.AmazonGameDto;
 import com.webapplication.discounthero.dto.ProductDetailDto;
+import com.webapplication.discounthero.exception.ItemNotFoundException;
 import com.webapplication.discounthero.repository.AmazonBaselineCategoryRepository;
 import com.webapplication.discounthero.repository.AmazonBaselineRepository;
 import org.springframework.beans.BeanUtils;
@@ -42,7 +43,8 @@ public class AmazonGameService {
 
     public ProductDetailDto getOneItem(String id) {
 
-        AmazonBaseline oneItem = amazonBaselineRepository.findById(id).get();
+        AmazonBaseline oneItem = amazonBaselineRepository.findById(id)
+                .orElseThrow(() -> new ItemNotFoundException(id));
         ProductDetailDto dto = new ProductDetailDto();
         BeanUtils.copyProperties(oneItem, dto);
         return dto;

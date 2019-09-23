@@ -12,7 +12,6 @@ import java.util.List;
 @RequestMapping(path = "/cloth")
 //@RequestMapping(path = "/user")
 public class ClothController {
-
     private AmazonClothService amazonClothService;
 
     public ClothController(AmazonClothService amazonClothService) {
