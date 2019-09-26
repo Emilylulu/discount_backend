@@ -2,11 +2,14 @@ package com.webapplication.discounthero.service;
 
 import com.webapplication.discounthero.domain.AmazonBaseline;
 import com.webapplication.discounthero.domain.AmazonBaselineCategory;
+import com.webapplication.discounthero.domain.AmazonBaselineReview;
 import com.webapplication.discounthero.dto.AmazonBookDto;
 import com.webapplication.discounthero.dto.ProductDetailDto;
+import com.webapplication.discounthero.dto.ProductReviewDto;
 import com.webapplication.discounthero.exception.ItemNotFoundException;
 import com.webapplication.discounthero.repository.AmazonBaselineCategoryRepository;
 import com.webapplication.discounthero.repository.AmazonBaselineRepository;
+import com.webapplication.discounthero.repository.AmazonReviewsRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,8 @@ public class AmazonBookService {
     private AmazonBaselineRepository amazonBaselineRepository;
     @Autowired
     private AmazonBaselineCategoryRepository amazonBaselineCategoryRepository;
+    @Autowired
+    private AmazonReviewsRepository amazonReviewsRepository;
 
     public List<AmazonBookDto> getAllItems() {
         Set<String> bookCategoryIds = amazonBaselineCategoryRepository.findAllByCategory("Books")
@@ -48,5 +53,26 @@ public class AmazonBookService {
         ProductDetailDto dto = new ProductDetailDto();
         BeanUtils.copyProperties(oneItem, dto);
         return dto;
+    }
+
+    public List<ProductReviewDto> getReview(String id) {
+        Set<String> allReviews = amazonReviewsRepository.findAllByItemId(id)
+                .stream()
+                .map(AmazonBaselineReview::getItemId)
+                .collect(Collectors.toSet());
+//        for (String list : allReviews) {
+//            System.out.println(list + "********");
+//
+//        }
+        List<AmazonBaselineReview> reviews = amazonReviewsRepository.findAll();
+        return reviews.stream()
+                .filter(review -> allReviews.contains(review.getItemId()))
+                .map(amazonReview -> {
+                    ProductReviewDto dto = new ProductReviewDto();
+                    BeanUtils.copyProperties(amazonReview, dto);
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
     }
 }

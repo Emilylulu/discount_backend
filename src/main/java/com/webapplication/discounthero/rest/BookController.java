@@ -2,6 +2,7 @@ package com.webapplication.discounthero.rest;
 
 import com.webapplication.discounthero.dto.AmazonBookDto;
 import com.webapplication.discounthero.dto.ProductDetailDto;
+import com.webapplication.discounthero.dto.ProductReviewDto;
 import com.webapplication.discounthero.service.AmazonBookService;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,4 +25,6 @@ public class BookController {
     public ProductDetailDto getOneItem(@PathVariable("id") String id) {
         return amazonBookService.getOneItem(id);
     }
+    @GetMapping(path = "/user/review/{id}")
+    public List<ProductReviewDto> getAllReview(@PathVariable("id") String id) { return amazonBookService.getReview(id);}
 }
